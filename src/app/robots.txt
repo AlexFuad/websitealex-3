@@ -1,0 +1,17 @@
+User-agent: *
+Allow: /
+
+# Host
+Host: https://johndoe.dev
+
+# Sitemaps
+Sitemap: https://johndoe.dev/sitemap.xml
+
+# Block common non-content paths
+Disallow: /api/
+Disallow: /_next/
+Disallow: /admin/
+Disallow: /*.json$
+
+# Allow specific API endpoints for SEO
+Allow: /api/og-image
