@@ -69,9 +69,10 @@ export default function SEO({
       url: siteUrl,
       image: `${siteUrl}/profile-image.jpg`,
       sameAs: [
-        'https://github.com/alexfuad',
-        'https://linkedin.com/in/alexfuad',
-        'https://twitter.com/alexfuad',
+        'https://github.com/AlexFuad/',
+        'https://www.linkedin.com/in/alexander-hilarius-fuad-fatahillah-9b1aa031/',
+        'https://instagram.com/alexanderhff',
+        'https://caniel.my.id',
       ],
       knowsAbout: [
         'Web Development',
@@ -102,27 +103,27 @@ export default function SEO({
       name: 'Alex Fuad - Full Stack Development',
       description: 'Professional web development services specializing in React, Next.js, and modern web technologies',
       url: siteUrl,
-      telephone: '+1 (555) 123-4567',
-      email: 'alex.fuad@example.com',
+      telephone: '+6288291437432',
+      email: 'info@alexfuad.my.id',
       address: {
         '@type': 'PostalAddress',
-        addressLocality: 'San Francisco',
-        addressRegion: 'CA',
-        addressCountry: 'US',
+        addressLocality: 'Kota Tangerang',
+        addressRegion: 'Banten',
+        addressCountry: 'ID',
       },
       geo: {
         '@type': 'GeoCoordinates',
-        latitude: '37.7749',
-        longitude: '-122.4194',
+        latitude: '-6.1781',
+        longitude: '106.6319',
       },
       openingHours: 'Mo-Fr 09:00-18:00',
       priceRange: '$$$',
       paymentAccepted: ['Cash', 'Credit Card', 'PayPal'],
-      languages: 'English',
+      languages: 'English, Indonesian',
       serviceType: 'Web Development',
       areaServed: {
         '@type': 'Country',
-        name: 'United States',
+        name: 'Indonesia',
       },
       hasOfferCatalog: {
         '@type': 'OfferCatalog',
@@ -182,10 +183,10 @@ export default function SEO({
         
         {/* Language and Region */}
         <html lang="en" />
-        <meta name="language" content="English" />
-        <meta name="geo.region" content="US-CA" />
-        <meta name="geo.placename" content="San Francisco" />
-        <meta name="ICBM" content="37.7749,-122.4194" />
+        <meta name="language" content="English, Indonesian" />
+        <meta name="geo.region" content="ID-BT" />
+        <meta name="geo.placename" content="Kota Tangerang" />
+        <meta name="ICBM" content="-6.1781,106.6319" />
         
         {/* Open Graph Meta Tags */}
         <meta property="og:type" content={defaultOpenGraph.type} />

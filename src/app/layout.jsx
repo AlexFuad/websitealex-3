@@ -2,6 +2,7 @@ import '../styles/globals.css'
 import { Inter } from 'next/font/google'
 import { LanguageProvider } from '../contexts/LanguageContext'
 import { ThemeProvider } from '../contexts/ThemeContext'
+import FloatingWhatsApp from '../components/FloatingWhatsApp'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -71,6 +72,7 @@ export default function RootLayout({ children }) {
         <ThemeProvider>
           <LanguageProvider>
             {children}
+            <FloatingWhatsApp />
           </LanguageProvider>
         </ThemeProvider>
       </body>

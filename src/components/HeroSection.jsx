@@ -1,7 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { ArrowDown, Download, Github, Linkedin, Mail, Sparkles } from 'lucide-react'
+import { ArrowDown, Download, Github, Linkedin, Mail, Sparkles, Instagram } from 'lucide-react'
 import { useTranslation } from '../hooks/useTranslation'
 import { useTheme } from '../contexts/ThemeContext'
 import { cn } from '../lib/utils'
@@ -197,8 +197,9 @@ export default function HeroSection() {
             className="flex justify-center space-x-6"
           >
             {[
-              { icon: Github, href: '#', label: t('hero.social.github') },
-              { icon: Linkedin, href: '#', label: t('hero.social.linkedin') },
+              { icon: Github, href: 'https://github.com/AlexFuad/', label: t('hero.social.github') },
+              { icon: Linkedin, href: 'https://www.linkedin.com/in/alexander-hilarius-fuad-fatahillah-9b1aa031/', label: t('hero.social.linkedin') },
+              { icon: Instagram, href: 'https://instagram.com/alexanderhff', label: 'Instagram' },
             ].map((social, index) => (
               <motion.a
                 key={social.label}

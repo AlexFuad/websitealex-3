@@ -1,7 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { Github, Linkedin, Twitter, Mail, Heart } from 'lucide-react'
+import { Github, Linkedin, Twitter, Mail, Heart, Instagram } from 'lucide-react'
 import { useTranslation } from '../hooks/useTranslation'
 import { useTheme } from '../contexts/ThemeContext'
 import { cn } from '../lib/utils'
@@ -10,10 +10,10 @@ export default function Footer() {
   const { t } = useTranslation()
   const { isDark } = useTheme()
   const socialLinks = [
-    { icon: Github, href: '#', label: t('footer.social.github') },
-    { icon: Linkedin, href: '#', label: t('footer.social.linkedin') },
-    { icon: Twitter, href: '#', label: t('footer.social.twitter') },
-    { icon: Mail, href: '#', label: t('footer.social.email') },
+    { icon: Github, href: 'https://github.com/AlexFuad/', label: t('footer.social.github') },
+    { icon: Linkedin, href: 'https://www.linkedin.com/in/alexander-hilarius-fuad-fatahillah-9b1aa031/', label: t('footer.social.linkedin') },
+    { icon: Instagram, href: 'https://instagram.com/alexanderhff', label: 'Instagram' },
+    { icon: Mail, href: 'mailto:info@alexfuad.my.id', label: t('footer.social.email') },
   ]
 
   const footerSections = [

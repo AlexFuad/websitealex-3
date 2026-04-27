@@ -42,27 +42,27 @@ export default function Contact() {
     {
       icon: Mail,
       label: t('contact.contactInfo.email'),
-      value: 'alex.fuad@example.com',
-      href: 'mailto:alex.fuad@example.com',
+      value: 'info@alexfuad.my.id',
+      href: 'mailto:info@alexfuad.my.id',
     },
     {
       icon: Phone,
       label: t('contact.contactInfo.phone'),
-      value: '+1 (555) 123-4567',
-      href: 'tel:+15551234567',
+      value: '+6288291437432',
+      href: 'https://wa.me/6288291437432',
     },
     {
       icon: MapPin,
       label: t('contact.contactInfo.location'),
-      value: 'San Francisco, CA',
+      value: 'Kota Tangerang, Indonesia',
       href: '#',
     },
   ]
 
   const socialLinks = [
-    { icon: Github, href: '#', label: t('contact.social.github') },
-    { icon: Linkedin, href: '#', label: t('contact.social.linkedin') },
-    { icon: Twitter, href: '#', label: t('contact.social.twitter') },
+    { icon: Github, href: 'https://github.com/AlexFuad/', label: t('contact.social.github') },
+    { icon: Linkedin, href: 'https://www.linkedin.com/in/alexander-hilarius-fuad-fatahillah-9b1aa031/', label: t('contact.social.linkedin') },
+    { icon: Twitter, href: 'https://instagram.com/alexanderhff', label: 'Instagram' },
   ]
 
   const containerVariants = {

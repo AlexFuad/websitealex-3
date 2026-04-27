@@ -1,7 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { ArrowDown, Download, Github, Linkedin } from 'lucide-react'
+import { ArrowDown, Download, Github, Linkedin, Instagram } from 'lucide-react'
 import { useTheme } from '../contexts/ThemeContext'
 import { cn } from '../lib/utils'
 
@@ -131,7 +131,7 @@ export default function Hero() {
             className="flex justify-center space-x-6"
           >
             <motion.a
-              href="#"
+              href="https://github.com/AlexFuad/"
               whileHover={{ scale: 1.2, rotate: 5 }}
               whileTap={{ scale: 0.9 }}
               className={cn("p-3 glass-card-dark rounded-full transition-colors duration-300", isDark ? "hover:bg-white/20" : "hover:bg-gray-100")}
@@ -139,12 +139,20 @@ export default function Hero() {
               <Github className={cn("h-5 w-5", isDark ? "text-white" : "text-gray-900")} />
             </motion.a>
             <motion.a
-              href="#"
+              href="https://www.linkedin.com/in/alexander-hilarius-fuad-fatahillah-9b1aa031/"
               whileHover={{ scale: 1.2, rotate: 5 }}
               whileTap={{ scale: 0.9 }}
               className={cn("p-3 glass-card-dark rounded-full transition-colors duration-300", isDark ? "hover:bg-white/20" : "hover:bg-gray-100")}
             >
               <Linkedin className={cn("h-5 w-5", isDark ? "text-white" : "text-gray-900")} />
+            </motion.a>
+            <motion.a
+              href="https://instagram.com/alexanderhff"
+              whileHover={{ scale: 1.2, rotate: 5 }}
+              whileTap={{ scale: 0.9 }}
+              className={cn("p-3 glass-card-dark rounded-full transition-colors duration-300", isDark ? "hover:bg-white/20" : "hover:bg-gray-100")}
+            >
+              <Instagram className={cn("h-5 w-5", isDark ? "text-white" : "text-gray-900")} />
             </motion.a>
           </motion.div>
         </motion.div>
