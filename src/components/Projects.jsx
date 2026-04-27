@@ -2,8 +2,11 @@
 
 import { motion } from 'framer-motion'
 import { ExternalLink, Github, Code } from 'lucide-react'
+import { useTheme } from '../contexts/ThemeContext'
+import { cn } from '../lib/utils'
 
 export default function Projects() {
+  const { isDark } = useTheme()
   const projects = [
     {
       title: 'E-Commerce Platform',
@@ -91,7 +94,7 @@ export default function Projects() {
           <h2 className="text-4xl md:text-5xl font-bold text-gradient mb-4">
             Featured Projects
           </h2>
-          <p className="text-lg text-gray-400 max-w-2xl mx-auto">
+          <p className={cn("text-lg max-w-2xl mx-auto", isDark ? "text-gray-400" : "text-gray-600")}>
             Explore my recent work and side projects. Each project represents my passion for creating 
             innovative solutions and attention to detail.
           </p>
@@ -127,7 +130,7 @@ export default function Projects() {
                       href={project.github}
                       whileHover={{ scale: 1.1 }}
                       whileTap={{ scale: 0.9 }}
-                      className="p-3 glass-card rounded-full hover:bg-white/20 transition-colors duration-200"
+                      className={cn("p-3 glass-card rounded-full transition-colors duration-200", isDark ? "hover:bg-white/20" : "hover:bg-gray-100")}
                     >
                       <Github className="h-5 w-5 text-white" />
                     </motion.a>
@@ -135,7 +138,7 @@ export default function Projects() {
                       href={project.demo}
                       whileHover={{ scale: 1.1 }}
                       whileTap={{ scale: 0.9 }}
-                      className="p-3 glass-card rounded-full hover:bg-white/20 transition-colors duration-200"
+                      className={cn("p-3 glass-card rounded-full transition-colors duration-200", isDark ? "hover:bg-white/20" : "hover:bg-gray-100")}
                     >
                       <ExternalLink className="h-5 w-5 text-white" />
                     </motion.a>
@@ -144,10 +147,10 @@ export default function Projects() {
 
                 {/* Project Content */}
                 <div className="p-6 space-y-4">
-                  <h3 className="text-xl font-bold text-white group-hover:text-gradient transition-colors duration-300">
+                  <h3 className={cn("text-xl font-bold group-hover:text-gradient transition-colors duration-300", isDark ? "text-white" : "text-gray-900")}>
                     {project.title}
                   </h3>
-                  <p className="text-gray-400 text-sm leading-relaxed">
+                  <p className={cn("text-sm leading-relaxed", isDark ? "text-gray-400" : "text-gray-600")}>
                     {project.description}
                   </p>
                   
@@ -156,7 +159,7 @@ export default function Projects() {
                     {project.tech.map((tech) => (
                       <span
                         key={tech}
-                        className="px-3 py-1 text-xs font-medium glass rounded-full text-gray-300"
+                        className={cn("px-3 py-1 text-xs font-medium glass rounded-full", isDark ? "text-gray-300" : "text-gray-700")}
                       >
                         {tech}
                       </span>
@@ -179,7 +182,7 @@ export default function Projects() {
             href="#"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            className="inline-flex items-center px-8 py-3 glass-card-dark rounded-full font-semibold hover:bg-white/20 transition-colors duration-300"
+            className={cn("inline-flex items-center px-8 py-3 glass-card-dark rounded-full font-semibold transition-colors duration-300", isDark ? "hover:bg-white/20 text-white" : "hover:bg-gray-100 text-gray-900")}
           >
             View All Projects
             <ExternalLink className="ml-2 h-4 w-4" />

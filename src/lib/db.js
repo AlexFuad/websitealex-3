@@ -1,53 +1,55 @@
-import mongoose from 'mongoose'
+import mysql from 'mysql2/promise'
 
-const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/portfolio_db'
+const MYSQL_HOST = process.env.MYSQL_HOST || 'localhost'
+const MYSQL_PORT = process.env.MYSQL_PORT || 3306
+const MYSQL_USER = process.env.MYSQL_USER || 'root'
+const MYSQL_PASSWORD = process.env.MYSQL_PASSWORD || ''
+const MYSQL_DATABASE = process.env.MYSQL_DATABASE || 'portfolio_db'
+
+let pool = null
 
 const connectDB = async () => {
   try {
-    const conn = await mongoose.connect(MONGODB_URI, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-      serverSelectionTimeoutMS: 5000,
-      socketTimeoutMS: 45000,
-      connectTimeoutMS: 10000,
-      maxPoolSize: 10,
-      bufferMaxEntries: 0,
-      bufferCommands: false,
+    pool = mysql.createPool({
+      host: MYSQL_HOST,
+      port: MYSQL_PORT,
+      user: MYSQL_USER,
+      password: MYSQL_PASSWORD,
+      database: MYSQL_DATABASE,
+      waitForConnections: true,
+      connectionLimit: 10,
+      queueLimit: 0,
+      enableKeepAlive: true,
+      keepAliveInitialDelay: 0
     })
 
-    console.log(`✅ MongoDB Connected: ${conn.connection.host}`)
-    console.log(`📊 Database: ${conn.connection.name}`)
-    
+    // Test connection
+    const connection = await pool.getConnection()
+    console.log(`✅ MySQL Connected: ${MYSQL_HOST}:${MYSQL_PORT}`)
+    console.log(`� Database: ${MYSQL_DATABASE}`)
+    connection.release()
+
     // Handle connection events
-    mongoose.connection.on('error', (err) => {
-      console.error('❌ MongoDB connection error:', err)
-      if (err.name === 'MongoNetworkError') {
-        console.error('🔍 Network error - Check MongoDB server status')
-      }
-    })
-
-    mongoose.connection.on('disconnected', () => {
-      console.log('⚠️ MongoDB disconnected')
-    })
-
-    mongoose.connection.on('connected', () => {
-      console.log('🔗 MongoDB connection established')
+    pool.on('error', (err) => {
+      console.error('❌ MySQL pool error:', err)
     })
 
     // Graceful shutdown
     process.on('SIGINT', async () => {
-      console.log('🔄 Closing MongoDB connection...')
-      await mongoose.connection.close()
-      console.log('✅ MongoDB connection closed')
+      console.log('🔄 Closing MySQL connection...')
+      if (pool) {
+        await pool.end()
+        console.log('✅ MySQL connection closed')
+      }
       process.exit(0)
     })
 
-    return conn
+    return pool
   } catch (error) {
     console.error('❌ Database connection failed:', error.message)
     console.error('🔍 Troubleshooting tips:')
-    console.error('  1. Check if MongoDB is running: mongod')
-    console.error('  2. Verify connection string:', MONGODB_URI)
+    console.error('  1. Check if MySQL is running')
+    console.error('  2. Verify connection settings')
     console.error('  3. Check network connectivity')
     process.exit(1)
   }
@@ -55,5 +57,5 @@ const connectDB = async () => {
 
 export default connectDB
 
-// Export mongoose instance for use in models
-export { mongoose }
+// Export pool for use in models
+export { pool }

@@ -1,111 +1,228 @@
-import mongoose from 'mongoose'
+import { pool } from '../lib/db.js'
 
-const blogSchema = new mongoose.Schema({
-  title: {
-    type: String,
-    required: [true, 'Title is required'],
-    trim: true,
-    maxlength: [200, 'Title cannot exceed 200 characters']
-  },
-  slug: {
-    type: String,
-    required: [true, 'Slug is required'],
-    unique: true,
-    trim: true,
-    lowercase: true,
-    index: true
-  },
-  content: {
-    type: String,
-    required: [true, 'Content is required']
-  },
-  tags: {
-    type: [String],
-    default: []
-  },
-  category: {
-    type: String,
-    required: [true, 'Category is required'],
-    enum: ['technology', 'tutorial', 'news', 'opinion', 'case-study', 'announcement'],
-    default: 'technology'
-  },
-  seo_meta: {
-    title: {
-      type: String,
-      default: ''
-    },
-    description: {
-      type: String,
-      default: ''
+class Blog {
+  static async createTable() {
+    const query = `
+      CREATE TABLE IF NOT EXISTS blogs (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        title VARCHAR(200) NOT NULL,
+        slug VARCHAR(255) NOT NULL UNIQUE,
+        content TEXT NOT NULL,
+        tags JSON DEFAULT '[]',
+        category ENUM('technology', 'tutorial', 'news', 'opinion', 'case-study', 'announcement') DEFAULT 'technology',
+        seo_title VARCHAR(255) DEFAULT '',
+        seo_description TEXT DEFAULT '',
+        image_url TEXT DEFAULT '',
+        status ENUM('draft', 'published', 'archived') DEFAULT 'draft',
+        featured BOOLEAN DEFAULT FALSE,
+        read_time INT DEFAULT 5,
+        author_id INT,
+        created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+        updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+        INDEX idx_slug (slug),
+        INDEX idx_category (category),
+        INDEX idx_status (status),
+        INDEX idx_created_at (created_at),
+        INDEX idx_author_id (author_id),
+        FOREIGN KEY (author_id) REFERENCES users(id) ON DELETE SET NULL
+      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
+    `
+    try {
+      await pool.execute(query)
+      console.log('✅ Blogs table created or already exists')
+    } catch (error) {
+      console.error('❌ Error creating blogs table:', error)
+      throw error
     }
-  },
-  image_url: {
-    type: String,
-    default: ''
-  },
-  status: {
-    type: String,
-    enum: ['draft', 'published', 'archived'],
-    default: 'draft'
-  },
-  featured: {
-    type: Boolean,
-    default: false
-  },
-  read_time: {
-    type: Number,
-    default: 5,
-    min: [1, 'Read time must be at least 1 minute']
-  },
-  author: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'User'
-  },
-  created_at: {
-    type: Date,
-    default: Date.now
-  },
-  updated_at: {
-    type: Date,
-    default: Date.now
   }
-}, {
-  timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' }
-})
 
-// Generate slug from title
-blogSchema.pre('save', async function(next) {
-  if (this.isModified('title') && !this.slug) {
-    this.slug = this.title
+  static generateSlug(title) {
+    return title
       .toLowerCase()
       .replace(/[^a-z0-9\s-]/g, '-')
+      .replace(/\s+/g, '-')
       .replace(/-+/g, '-')
       .trim()
   }
-  next()
-})
 
-// Indexes for performance
-blogSchema.index({ slug: 1 })
-blogSchema.index({ category: 1 })
-blogSchema.index({ status: 1 })
-blogSchema.index({ created_at: -1 })
+  static async create(blogData) {
+    const { title, slug, content, tags = [], category = 'technology', seo_title = '', seo_description = '', image_url = '', status = 'draft', featured = false, read_time = 5, author_id } = blogData
+    
+    if (!title) {
+      throw new Error('Title is required')
+    }
+    if (!content) {
+      throw new Error('Content is required')
+    }
 
-// Virtual for blog URL
-blogSchema.virtual('url').get(function() {
-  return `/blog/${this.slug}`
-})
+    const finalSlug = slug || this.generateSlug(title)
+    const tagsJson = JSON.stringify(tags)
 
-// Virtual for full blog URL with domain
-blogSchema.virtual('full_url').get(function() {
-  return `${process.env.NEXT_PUBLIC_SITE_URL || 'https://localhost:3000'}${this.url}`
-})
+    const query = `
+      INSERT INTO blogs (title, slug, content, tags, category, seo_title, seo_description, image_url, status, featured, read_time, author_id)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    `
+    
+    try {
+      const [result] = await pool.execute(query, [title, finalSlug, content, tagsJson, category, seo_title, seo_description, image_url, status, featured, read_time, author_id])
+      return await this.findById(result.insertId)
+    } catch (error) {
+      if (error.code === 'ER_DUP_ENTRY') {
+        throw new Error('Slug already exists')
+      }
+      throw error
+    }
+  }
 
-// Instance method to check if blog is published
-blogSchema.methods.isPublished = function() {
-  return this.status === 'published'
+  static async findById(id) {
+    const query = 'SELECT * FROM blogs WHERE id = ?'
+    const [rows] = await pool.execute(query, [id])
+    if (rows.length === 0) return null
+    return this.formatBlog(rows[0])
+  }
+
+  static async findBySlug(slug) {
+    const query = 'SELECT * FROM blogs WHERE slug = ?'
+    const [rows] = await pool.execute(query, [slug])
+    if (rows.length === 0) return null
+    return this.formatBlog(rows[0])
+  }
+
+  static async update(id, blogData) {
+    const { title, slug, content, tags, category, seo_title, seo_description, image_url, status, featured, read_time, author_id } = blogData
+    const updates = []
+    const values = []
+
+    if (title) {
+      updates.push('title = ?')
+      values.push(title)
+    }
+    if (slug) {
+      updates.push('slug = ?')
+      values.push(slug)
+    }
+    if (content) {
+      updates.push('content = ?')
+      values.push(content)
+    }
+    if (tags !== undefined) {
+      updates.push('tags = ?')
+      values.push(JSON.stringify(tags))
+    }
+    if (category) {
+      updates.push('category = ?')
+      values.push(category)
+    }
+    if (seo_title !== undefined) {
+      updates.push('seo_title = ?')
+      values.push(seo_title)
+    }
+    if (seo_description !== undefined) {
+      updates.push('seo_description = ?')
+      values.push(seo_description)
+    }
+    if (image_url !== undefined) {
+      updates.push('image_url = ?')
+      values.push(image_url)
+    }
+    if (status) {
+      updates.push('status = ?')
+      values.push(status)
+    }
+    if (featured !== undefined) {
+      updates.push('featured = ?')
+      values.push(featured)
+    }
+    if (read_time !== undefined) {
+      updates.push('read_time = ?')
+      values.push(read_time)
+    }
+    if (author_id !== undefined) {
+      updates.push('author_id = ?')
+      values.push(author_id)
+    }
+
+    if (updates.length === 0) return null
+
+    values.push(id)
+    const query = `UPDATE blogs SET ${updates.join(', ')} WHERE id = ?`
+    
+    try {
+      await pool.execute(query, values)
+      return await this.findById(id)
+    } catch (error) {
+      if (error.code === 'ER_DUP_ENTRY') {
+        throw new Error('Slug already exists')
+      }
+      throw error
+    }
+  }
+
+  static async delete(id) {
+    const query = 'DELETE FROM blogs WHERE id = ?'
+    const [result] = await pool.execute(query, [id])
+    return result.affectedRows > 0
+  }
+
+  static async findAll(filters = {}) {
+    let query = 'SELECT * FROM blogs WHERE 1=1'
+    const values = []
+
+    if (filters.status) {
+      query += ' AND status = ?'
+      values.push(filters.status)
+    }
+    if (filters.category) {
+      query += ' AND category = ?'
+      values.push(filters.category)
+    }
+    if (filters.featured !== undefined) {
+      query += ' AND featured = ?'
+      values.push(filters.featured)
+    }
+    if (filters.author_id) {
+      query += ' AND author_id = ?'
+      values.push(filters.author_id)
+    }
+    if (filters.search) {
+      query += ' AND (title LIKE ? OR content LIKE ?)'
+      const searchTerm = `%${filters.search}%`
+      values.push(searchTerm, searchTerm)
+    }
+
+    query += ' ORDER BY created_at DESC'
+    
+    if (filters.limit) {
+      query += ' LIMIT ?'
+      values.push(filters.limit)
+    }
+
+    if (filters.offset) {
+      query += ' OFFSET ?'
+      values.push(filters.offset)
+    }
+
+    const [rows] = await pool.execute(query, values)
+    return rows.map(row => this.formatBlog(row))
+  }
+
+  static async search(searchTerm, filters = {}) {
+    return this.findAll({ ...filters, search: searchTerm })
+  }
+
+  static formatBlog(blog) {
+    return {
+      ...blog,
+      tags: typeof blog.tags === 'string' ? JSON.parse(blog.tags) : blog.tags,
+      seo_meta: {
+        title: blog.seo_title,
+        description: blog.seo_description
+      },
+      url: `/blog/${blog.slug}`,
+      full_url: `${process.env.NEXT_PUBLIC_SITE_URL || 'https://localhost:3000'}/blog/${blog.slug}`,
+      isPublished: blog.status === 'published'
+    }
+  }
 }
-
-const Blog = mongoose.model('Blog', blogSchema)
 
 export default Blog

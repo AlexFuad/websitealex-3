@@ -13,12 +13,12 @@ export const metadata = {
   description: 'Welcome to my portfolio. I\'m a passionate Full Stack Developer creating beautiful and functional web experiences with modern technologies.',
   keywords: 'home, portfolio, welcome, full stack developer, web development',
   openGraph: {
-    title: 'John Doe - Full Stack Developer',
+    title: 'Alex Fuad - Full Stack Developer',
     description: 'Passionate developer creating beautiful web experiences with React, Next.js, and modern web technologies.',
     type: 'website',
   },
   twitter: {
-    title: 'John Doe - Full Stack Developer',
+    title: 'Alex Fuad - Full Stack Developer',
     description: 'Passionate developer creating beautiful web experiences with React, Next.js, and modern web technologies.',
   },
 }

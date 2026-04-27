@@ -15,7 +15,7 @@ export default function SEO({
   alternates = {}
 }) {
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://localhost:3000'
-  const defaultTitle = 'Portfolio - John Doe'
+  const defaultTitle = 'Portfolio - Alex Fuad'
   const defaultDescription = 'Full Stack Developer Portfolio - Creating beautiful web experiences with modern technologies'
   const defaultKeywords = 'portfolio, web developer, full stack, react, next.js, javascript, frontend, backend'
 
@@ -47,8 +47,8 @@ export default function SEO({
   // Default Twitter Card configuration
   const defaultTwitter = {
     card: 'summary_large_image',
-    site: '@johndoe',
-    creator: '@johndoe',
+    site: '@alexfuad',
+    creator: '@alexfuad',
     title: metaTitle,
     description: metaDescription,
     images: [`${siteUrl}/og-image.jpg`],
@@ -63,15 +63,15 @@ export default function SEO({
     const personSchema = {
       '@context': 'https://schema.org',
       '@type': 'Person',
-      name: 'John Doe',
+      name: 'Alex Fuad',
       jobTitle: 'Full Stack Developer',
       description: 'Passionate developer creating beautiful web experiences',
       url: siteUrl,
       image: `${siteUrl}/profile-image.jpg`,
       sameAs: [
-        'https://github.com/johndoe',
-        'https://linkedin.com/in/johndoe',
-        'https://twitter.com/johndoe',
+        'https://github.com/alexfuad',
+        'https://linkedin.com/in/alexfuad',
+        'https://twitter.com/alexfuad',
       ],
       knowsAbout: [
         'Web Development',
@@ -99,11 +99,11 @@ export default function SEO({
     const serviceSchema = {
       '@context': 'https://schema.org',
       '@type': 'ProfessionalService',
-      name: 'John Doe - Full Stack Development',
+      name: 'Alex Fuad - Full Stack Development',
       description: 'Professional web development services specializing in React, Next.js, and modern web technologies',
       url: siteUrl,
       telephone: '+1 (555) 123-4567',
-      email: 'john.doe@example.com',
+      email: 'alex.fuad@example.com',
       address: {
         '@type': 'PostalAddress',
         addressLocality: 'San Francisco',

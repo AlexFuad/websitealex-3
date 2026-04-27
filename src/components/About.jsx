@@ -2,39 +2,44 @@
 
 import { motion } from 'framer-motion'
 import { Award, Briefcase, GraduationCap, Target } from 'lucide-react'
+import { useTranslation } from '../hooks/useTranslation'
+import { useTheme } from '../contexts/ThemeContext'
+import { cn } from '../lib/utils'
 
 export default function About() {
+  const { t } = useTranslation()
+  const { isDark } = useTheme()
   const stats = [
-    { icon: Briefcase, label: 'Projects Completed', value: '50+' },
-    { icon: Award, label: 'Awards Won', value: '15' },
-    { icon: GraduationCap, label: 'Certifications', value: '8' },
-    { icon: Target, label: 'Happy Clients', value: '100+' },
+    { icon: Briefcase, label: t('about.projects'), value: '50+' },
+    { icon: Award, label: t('about.awards'), value: '15' },
+    { icon: GraduationCap, label: t('about.certifications'), value: '8' },
+    { icon: Target, label: t('about.clients'), value: '100+' },
   ]
 
   const skills = [
-    { category: 'Frontend', items: ['React', 'Next.js', 'Vue.js', 'TypeScript', 'Tailwind CSS'] },
-    { category: 'Backend', items: ['Node.js', 'Python', 'Django', 'PostgreSQL', 'MongoDB'] },
-    { category: 'Tools & Others', items: ['Git', 'Docker', 'AWS', 'Figma', 'Vercel'] },
+    { category: t('skills.categories.frontend'), items: ['React', 'Next.js', 'Vue.js', 'TypeScript', 'Tailwind CSS'] },
+    { category: t('skills.categories.backend'), items: ['Node.js', 'Python', 'Django', 'PostgreSQL', 'MongoDB'] },
+    { category: t('skills.categories.tools'), items: ['Git', 'Docker', 'AWS', 'Figma', 'Vercel'] },
   ]
 
   const timeline = [
     {
-      year: '2024',
-      title: 'Senior Full Stack Developer',
-      company: 'Tech Innovations Inc.',
-      description: 'Leading development of enterprise web applications and mentoring junior developers.',
+      year: '2024 - Present',
+      title: t('about.jobTitles.senior'),
+      company: t('about.timeline.company1'),
+      description: t('about.timeline.desc1'),
     },
     {
-      year: '2022',
-      title: 'Full Stack Developer',
-      company: 'Digital Solutions Ltd.',
-      description: 'Developed and maintained multiple client projects using modern web technologies.',
+      year: '2022 - 2024',
+      title: t('about.jobTitles.mid'),
+      company: t('about.timeline.company2'),
+      description: t('about.timeline.desc2'),
     },
     {
-      year: '2020',
-      title: 'Junior Developer',
-      company: 'StartUp Hub',
-      description: 'Started my professional journey building responsive web applications.',
+      year: '2020 - 2022',
+      title: t('about.jobTitles.frontend'),
+      company: t('about.timeline.company3'),
+      description: t('about.timeline.desc3'),
     },
   ]
 
@@ -72,11 +77,10 @@ export default function About() {
           className="text-center mb-16"
         >
           <h2 className="text-4xl md:text-5xl font-bold text-gradient mb-4">
-            About Me
+            {t('about.title')}
           </h2>
-          <p className="text-lg text-gray-400 max-w-2xl mx-auto">
-            Passionate developer with a love for creating beautiful, functional web experiences. 
-            I specialize in modern web technologies and enjoy tackling complex problems.
+          <p className={cn("text-lg max-w-2xl mx-auto", isDark ? "text-gray-400" : "text-gray-600")}>
+            {t('about.description')}
           </p>
         </motion.div>
 
@@ -100,10 +104,10 @@ export default function About() {
                 transition={{ duration: 0.6 }}
                 className="inline-flex items-center justify-center w-12 h-12 rounded-full glass mb-4"
               >
-                <stat.icon className="h-6 w-6 text-white" />
+                <stat.icon className={cn("h-6 w-6", isDark ? "text-white" : "text-gray-900")} />
               </motion.div>
-              <div className="text-2xl font-bold text-white mb-1">{stat.value}</div>
-              <div className="text-sm text-gray-400">{stat.label}</div>
+              <div className={cn("text-2xl font-bold mb-1", isDark ? "text-white" : "text-gray-900")}>{stat.value}</div>
+              <div className={cn("text-sm", isDark ? "text-gray-400" : "text-gray-600")}>{stat.label}</div>
             </motion.div>
           ))}
         </motion.div>
@@ -115,7 +119,7 @@ export default function About() {
           transition={{ delay: 0.3 }}
           className="mb-16"
         >
-          <h3 className="text-2xl font-bold text-white mb-8 text-center">Technical Skills</h3>
+          <h3 className={cn("text-2xl font-bold mb-8 text-center", isDark ? "text-white" : "text-gray-900")}>{t('skills.title')}</h3>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {skills.map((skillGroup) => (
               <motion.div
@@ -123,12 +127,12 @@ export default function About() {
                 whileHover={{ y: -5 }}
                 className="glass-card-dark p-6"
               >
-                <h4 className="text-lg font-semibold text-white mb-4">{skillGroup.category}</h4>
+                <h4 className={cn("text-lg font-semibold mb-4", isDark ? "text-white" : "text-gray-900")}>{skillGroup.category}</h4>
                 <div className="space-y-2">
                   {skillGroup.items.map((skill) => (
                     <div key={skill} className="flex items-center justify-between">
-                      <span className="text-gray-300">{skill}</span>
-                      <div className="w-24 h-2 bg-white/10 rounded-full overflow-hidden">
+                      <span className={cn(isDark ? "text-gray-300" : "text-gray-700")}>{skill}</span>
+                      <div className={cn("w-24 h-2 rounded-full overflow-hidden", isDark ? "bg-white/10" : "bg-gray-200")}>
                         <motion.div
                           initial={{ width: 0 }}
                           whileInView={{ width: '80%' }}
@@ -150,7 +154,7 @@ export default function About() {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.5 }}
         >
-          <h3 className="text-2xl font-bold text-white mb-8 text-center">Experience</h3>
+          <h3 className={cn("text-2xl font-bold mb-8 text-center", isDark ? "text-white" : "text-gray-900")}>{t('about.experience')}</h3>
           <div className="space-y-6">
             {timeline.map((item, index) => (
               <motion.div
@@ -162,11 +166,11 @@ export default function About() {
                 className="glass-card-dark p-6 border-l-4 border-blue-500"
               >
                 <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-2">
-                  <h4 className="text-xl font-semibold text-white">{item.title}</h4>
-                  <span className="text-sm text-gray-400">{item.year}</span>
+                  <h4 className={cn("text-xl font-semibold", isDark ? "text-white" : "text-gray-900")}>{item.title}</h4>
+                  <span className={cn("text-sm", isDark ? "text-gray-400" : "text-gray-600")}>{item.year}</span>
                 </div>
-                <div className="text-blue-400 mb-2">{item.company}</div>
-                <p className="text-gray-400">{item.description}</p>
+                <div className={cn("mb-2", isDark ? "text-blue-400" : "text-blue-600")}>{item.company}</div>
+                <p className={cn(isDark ? "text-gray-400" : "text-gray-600")}>{item.description}</p>
               </motion.div>
             ))}
           </div>

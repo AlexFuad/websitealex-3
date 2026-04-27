@@ -15,8 +15,13 @@ import {
   Package,
   TestTube
 } from 'lucide-react'
+import { useTranslation } from '../hooks/useTranslation'
+import { useTheme } from '../contexts/ThemeContext'
+import { cn } from '../lib/utils'
 
 export default function SkillsSection() {
+  const { t } = useTranslation()
+  const { isDark } = useTheme()
   const skills = [
     // Large items (2x2)
     {
@@ -211,11 +216,10 @@ export default function SkillsSection() {
           className="text-center mb-16"
         >
           <h2 className="text-4xl md:text-5xl font-bold text-gradient mb-4">
-            Skills & Expertise
+            {t('skills.title')}
           </h2>
-          <p className="text-lg text-gray-400 max-w-2xl mx-auto">
-            A comprehensive overview of my technical skills and areas of expertise. 
-            Each skill represents years of experience and continuous learning.
+          <p className={cn("text-lg max-w-2xl mx-auto", isDark ? "text-gray-400" : "text-gray-600")}>
+            {t('skills.subtitle')}
           </p>
         </motion.div>
 
@@ -260,10 +264,10 @@ export default function SkillsSection() {
               {/* Icon */}
               <div className="flex items-start justify-between mb-3">
                 <div className={`p-2 glass rounded-lg group-hover:scale-110 transition-transform duration-300`}>
-                  <skill.icon className={`${getIconSize(skill.size)} text-white`} />
+                  <skill.icon className={cn(getIconSize(skill.size), isDark ? "text-white" : "text-gray-900")} />
                 </div>
                 {skill.size === 'lg' && (
-                  <span className="text-2xl font-bold text-white opacity-50">
+                  <span className={cn("text-2xl font-bold opacity-50", isDark ? "text-white" : "text-gray-900")}>
                     {skill.level}%
                   </span>
                 )}
@@ -271,12 +275,12 @@ export default function SkillsSection() {
 
               {/* Content */}
               <div className="space-y-2">
-                <h3 className={`${getTitleSize(skill.size)} font-bold text-white group-hover:text-gradient transition-colors duration-300`}>
+                <h3 className={cn(getTitleSize(skill.size), "font-bold group-hover:text-gradient transition-colors duration-300", isDark ? "text-white" : "text-gray-900")}>
                   {skill.title}
                 </h3>
                 
                 {skill.size !== 'sm' && (
-                  <p className="text-sm text-gray-400 leading-relaxed">
+                  <p className={cn("text-sm leading-relaxed", isDark ? "text-gray-400" : "text-gray-600")}>
                     {skill.description}
                   </p>
                 )}
@@ -285,10 +289,10 @@ export default function SkillsSection() {
                 {(skill.size === 'lg' || skill.size === 'md') && (
                   <div className="mt-3">
                     <div className="flex items-center justify-between mb-1">
-                      <span className="text-xs text-gray-400">Proficiency</span>
-                      <span className="text-xs text-white font-medium">{skill.level}%</span>
+                      <span className={cn("text-xs", isDark ? "text-gray-400" : "text-gray-600")}>{t('skills.proficiency')}</span>
+                      <span className={cn("text-xs font-medium", isDark ? "text-white" : "text-gray-900")}>{skill.level}%</span>
                     </div>
-                    <div className="w-full h-2 bg-white/10 rounded-full overflow-hidden">
+                    <div className={cn("w-full h-2 rounded-full overflow-hidden", isDark ? "bg-white/10" : "bg-gray-200")}>
                       <motion.div
                         initial={{ width: 0 }}
                         whileInView={{ width: `${skill.level}%` }}
@@ -305,7 +309,7 @@ export default function SkillsSection() {
                     {skill.description.split(', ').slice(0, 2).map((tech) => (
                       <span
                         key={tech}
-                        className="px-2 py-1 text-xs glass rounded-full text-gray-300"
+                        className={cn("px-2 py-1 text-xs glass rounded-full", isDark ? "text-gray-300" : "text-gray-700")}
                       >
                         {tech.trim()}
                       </span>
@@ -341,10 +345,10 @@ export default function SkillsSection() {
           className="mt-20 grid grid-cols-2 md:grid-cols-4 gap-6"
         >
           {[
-            { number: '5+', label: 'Years Experience' },
-            { number: '50+', label: 'Projects Completed' },
-            { number: '12', label: 'Technologies' },
-            { number: '100%', label: 'Client Satisfaction' },
+            { number: '5+', label: t('skills.stats.experience') },
+            { number: '50+', label: t('skills.stats.projects') },
+            { number: '12', label: t('skills.categories.tools') },
+            { number: '100%', label: t('skills.stats.satisfaction') },
           ].map((stat, index) => (
             <motion.div
               key={stat.label}
@@ -355,7 +359,7 @@ export default function SkillsSection() {
               className="glass-card-dark p-6 text-center"
             >
               <div className="text-3xl font-bold text-gradient mb-2">{stat.number}</div>
-              <div className="text-sm text-gray-400">{stat.label}</div>
+              <div className={cn("text-sm", isDark ? "text-gray-400" : "text-gray-600")}>{stat.label}</div>
             </motion.div>
           ))}
         </motion.div>

@@ -2,7 +2,7 @@ import { ImageResponse } from 'next/og'
 
 export const runtime = 'edge'
 
-export const alt = 'Portfolio - John Doe'
+export const alt = 'Portfolio - Alex Fuad'
 export const size = {
   width: 1200,
   height: 630,
@@ -34,7 +34,7 @@ export default async function Image() {
             textAlign: 'center',
           }}
         >
-          John Doe
+          Alex Fuad
         </div>
         <div
           style={{

@@ -2,13 +2,16 @@
 
 import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
-import { Menu, X, Moon, Sun } from 'lucide-react'
+import { Menu, X, Moon, Sun, Globe } from 'lucide-react'
 import { cn } from '../lib/utils'
+import { useTranslation } from '../hooks/useTranslation'
+import { useTheme } from '../contexts/ThemeContext'
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
-  const [isDark, setIsDark] = useState(true)
+  const { isDark, toggleTheme } = useTheme()
+  const { t, language, toggleLanguage } = useTranslation()
 
   useEffect(() => {
     const handleScroll = () => {
@@ -19,22 +22,12 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
-  useEffect(() => {
-    if (isDark) {
-      document.documentElement.classList.add('dark')
-      document.body.classList.remove('light')
-    } else {
-      document.documentElement.classList.remove('dark')
-      document.body.classList.add('light')
-    }
-  }, [isDark])
-
   const navItems = [
-    { name: 'Home', href: '#home' },
-    { name: 'About', href: '#about' },
-    { name: 'Projects', href: '#projects' },
-    { name: 'Skills', href: '#skills' },
-    { name: 'Contact', href: '#contact' },
+    { name: t('navbar.home'), href: '#home' },
+    { name: t('navbar.about'), href: '#about' },
+    { name: t('navbar.portfolio'), href: '#portfolio' },
+    { name: t('navbar.skills'), href: '#skills' },
+    { name: t('navbar.contact'), href: '#contact' },
   ]
 
   return (
@@ -71,7 +64,10 @@ export default function Navbar() {
                   initial={{ opacity: 0, y: -20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.1 * index + 0.3 }}
-                  className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200 hover:bg-white/10"
+                  className={cn(
+                    'px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200',
+                    isDark ? 'text-gray-300 hover:text-white hover:bg-white/10' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
+                  )}
                 >
                   {item.name}
                 </motion.a>
@@ -79,20 +75,33 @@ export default function Navbar() {
             </div>
           </div>
 
-          {/* Theme Toggle & Mobile Menu Button */}
+          {/* Theme Toggle & Language Switcher & Mobile Menu Button */}
           <div className="flex items-center space-x-4">
             <motion.button
               initial={{ opacity: 0, scale: 0 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: 0.5 }}
-              onClick={() => setIsDark(!isDark)}
-              className="p-2 rounded-lg glass-card-dark hover:bg-white/20 transition-colors duration-200"
+              onClick={toggleTheme}
+              className={cn("p-2 rounded-lg glass-card-dark transition-colors duration-200", isDark ? "hover:bg-white/20" : "hover:bg-gray-100")}
+              title={isDark ? 'Light Mode' : 'Dark Mode'}
             >
               {isDark ? (
                 <Sun className="h-5 w-5 text-yellow-400" />
               ) : (
-                <Moon className="h-5 w-5 text-blue-400" />
+                <Moon className="h-5 w-5 text-blue-600" />
               )}
+            </motion.button>
+
+            <motion.button
+              initial={{ opacity: 0, scale: 0 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 0.55 }}
+              onClick={toggleLanguage}
+              className={cn("p-2 rounded-lg glass-card-dark transition-colors duration-200 flex items-center space-x-1", isDark ? "hover:bg-white/20" : "hover:bg-gray-100")}
+              title={language === 'en' ? 'Switch to Indonesian' : 'Switch to English'}
+            >
+              <Globe className={cn("h-5 w-5", isDark ? "text-white" : "text-gray-700")} />
+              <span className={cn("text-sm font-medium", isDark ? "text-white" : "text-gray-700")}>{language === 'en' ? 'EN' : 'ID'}</span>
             </motion.button>
 
             {/* Mobile menu button */}
@@ -102,12 +111,12 @@ export default function Navbar() {
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ delay: 0.6 }}
                 onClick={() => setIsOpen(!isOpen)}
-                className="p-2 rounded-md glass-card-dark hover:bg-white/20 transition-colors duration-200"
+                className={cn("p-2 rounded-md glass-card-dark transition-colors duration-200", isDark ? "hover:bg-white/20" : "hover:bg-gray-100")}
               >
                 {isOpen ? (
-                  <X className="h-6 w-6 text-white" />
+                  <X className={cn('h-6 w-6', isDark ? 'text-white' : 'text-gray-900')} />
                 ) : (
-                  <Menu className="h-6 w-6 text-white" />
+                  <Menu className={cn('h-6 w-6', isDark ? 'text-white' : 'text-gray-900')} />
                 )}
               </motion.button>
             </div>
@@ -144,7 +153,10 @@ export default function Navbar() {
                 key={item.name}
                 href={item.href}
                 onClick={() => setIsOpen(false)}
-                className="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium transition-colors duration-200 hover:bg-white/10"
+                className={cn(
+                  'block px-3 py-2 rounded-md text-base font-medium transition-colors duration-200',
+                  isDark ? 'text-gray-300 hover:text-white hover:bg-white/10' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
+                )}
               >
                 {item.name}
               </a>

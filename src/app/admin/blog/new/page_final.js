@@ -5,9 +5,9 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { Save, Trash2, Eye, EyeOff, Calendar, Clock, Tag, Search, Filter, ChevronDown, ExternalLink, Github, X } from 'lucide-react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import { useSession } from 'next-auth/react'
+import { useSession, signOut } from 'next-auth/react'
 import ReactQuill from 'react-quill-new'
-import "react-quill-new/dist/quill.snow.css"
+import 'react-quill-new/dist/quill.snow.css'
 
 export default function NewBlogPost() {
   const router = useRouter()
@@ -114,6 +114,7 @@ export default function NewBlogPost() {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': `Bearer ${session?.accessToken}`
         },
         body: JSON.stringify(postData)
       })

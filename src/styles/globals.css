@@ -28,24 +28,24 @@
 
   .light {
     --background: 0 0% 100%;
-    --foreground: 240 10% 3.9%;
+    --foreground: 222.2 84% 4.9%;
     --card: 0 0% 100%;
-    --card-foreground: 240 10% 3.9%;
+    --card-foreground: 222.2 84% 4.9%;
     --popover: 0 0% 100%;
-    --popover-foreground: 240 10% 3.9%;
-    --primary: 240 5.9% 10%;
-    --primary-foreground: 0 0% 98%;
-    --secondary: 240 4.8% 95.9%;
-    --secondary-foreground: 240 5.9% 10%;
-    --muted: 240 4.8% 95.9%;
-    --muted-foreground: 240 3.8% 46.1%;
-    --accent: 240 4.8% 95.9%;
-    --accent-foreground: 240 5.9% 10%;
+    --popover-foreground: 222.2 84% 4.9%;
+    --primary: 222.2 47.4% 11.2%;
+    --primary-foreground: 210 40% 98%;
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 222.2 47.4% 11.2%;
     --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 240 5.9% 90%;
-    --input: 240 5.9% 90%;
-    --ring: 240 10% 3.9%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 222.2 84% 4.9%;
   }
 }
 
@@ -58,6 +58,12 @@
     background-image: 
       radial-gradient(at 40% 40%, hsla(var(--primary) / 0.1) 0px, transparent 50%),
       radial-gradient(at 80% 80%, hsla(var(--primary) / 0.05) 0px, transparent 50%);
+  }
+
+  .light body {
+    background-image: 
+      radial-gradient(at 40% 40%, hsla(220, 70%, 50% / 0.08) 0px, transparent 50%),
+      radial-gradient(at 80% 80%, hsla(280, 70%, 50% / 0.05) 0px, transparent 50%);
   }
 }
 
@@ -84,5 +90,49 @@
   
   .nav-blur {
     @apply backdrop-blur-md bg-black/40 border-b border-white/10;
+  }
+
+  .light .glass {
+    @apply bg-black/5 border border-gray-200;
+  }
+  
+  .light .glass-dark {
+    @apply bg-white/80 border border-gray-200;
+  }
+  
+  .light .glass-card {
+    @apply bg-white/90 border border-gray-200 shadow-lg;
+  }
+  
+  .light .glass-card-dark {
+    @apply bg-white/95 border border-gray-200 shadow-lg;
+  }
+
+  .light .nav-blur {
+    @apply bg-white/90 border-b border-gray-200;
+  }
+
+  .light .text-white {
+    color: #1a1a1a;
+  }
+
+  .light .text-gray-400 {
+    color: #4b5563;
+  }
+
+  .light .text-gray-300 {
+    color: #374151;
+  }
+
+  .light .text-gray-600 {
+    color: #4b5563;
+  }
+
+  .light .text-gray-700 {
+    color: #374151;
+  }
+
+  .light .text-gray-900 {
+    color: #111827;
   }
 }

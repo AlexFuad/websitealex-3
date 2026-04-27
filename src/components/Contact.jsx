@@ -3,8 +3,13 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { Mail, Phone, MapPin, Send, Github, Linkedin, Twitter } from 'lucide-react'
+import { useTranslation } from '../hooks/useTranslation'
+import { useTheme } from '../contexts/ThemeContext'
+import { cn } from '../lib/utils'
 
 export default function Contact() {
+  const { t } = useTranslation()
+  const { isDark } = useTheme()
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -36,28 +41,28 @@ export default function Contact() {
   const contactInfo = [
     {
       icon: Mail,
-      label: 'Email',
-      value: 'john.doe@example.com',
-      href: 'mailto:john.doe@example.com',
+      label: t('contact.contactInfo.email'),
+      value: 'alex.fuad@example.com',
+      href: 'mailto:alex.fuad@example.com',
     },
     {
       icon: Phone,
-      label: 'Phone',
+      label: t('contact.contactInfo.phone'),
       value: '+1 (555) 123-4567',
       href: 'tel:+15551234567',
     },
     {
       icon: MapPin,
-      label: 'Location',
+      label: t('contact.contactInfo.location'),
       value: 'San Francisco, CA',
       href: '#',
     },
   ]
 
   const socialLinks = [
-    { icon: Github, href: '#', label: 'GitHub' },
-    { icon: Linkedin, href: '#', label: 'LinkedIn' },
-    { icon: Twitter, href: '#', label: 'Twitter' },
+    { icon: Github, href: '#', label: t('contact.social.github') },
+    { icon: Linkedin, href: '#', label: t('contact.social.linkedin') },
+    { icon: Twitter, href: '#', label: t('contact.social.twitter') },
   ]
 
   const containerVariants = {
@@ -94,11 +99,10 @@ export default function Contact() {
           className="text-center mb-16"
         >
           <h2 className="text-4xl md:text-5xl font-bold text-gradient mb-4">
-            Get In Touch
+            {t('contact.title')}
           </h2>
-          <p className="text-lg text-gray-400 max-w-2xl mx-auto">
-            Have a project in mind or want to collaborate? I'd love to hear from you. 
-            Feel free to reach out through any of the channels below.
+          <p className={cn("text-lg max-w-2xl mx-auto", isDark ? "text-gray-400" : "text-gray-600")}>
+            {t('contact.subtitle')}
           </p>
         </motion.div>
 
@@ -118,8 +122,8 @@ export default function Contact() {
               className="space-y-6"
             >
               <motion.div variants={itemVariants}>
-                <label htmlFor="name" className="block text-sm font-medium text-gray-300 mb-2">
-                  Name
+                <label htmlFor="name" className={cn("block text-sm font-medium mb-2", isDark ? "text-gray-300" : "text-gray-700")}>
+                  {t('contact.name')}
                 </label>
                 <input
                   type="text"
@@ -128,14 +132,14 @@ export default function Contact() {
                   value={formData.name}
                   onChange={handleChange}
                   required
-                  className="w-full px-4 py-3 glass-card-dark border border-white/20 rounded-lg focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20 text-white placeholder-gray-400"
-                  placeholder="John Doe"
+                  className={cn("w-full px-4 py-3 glass-card-dark border rounded-lg focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20", isDark ? "border-white/20 text-white placeholder-gray-400" : "border-gray-300 text-gray-900 placeholder-gray-500")}
+                  placeholder={t('contact.placeholders.name')}
                 />
               </motion.div>
 
               <motion.div variants={itemVariants}>
-                <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-2">
-                  Email
+                <label htmlFor="email" className={cn("block text-sm font-medium mb-2", isDark ? "text-gray-300" : "text-gray-700")}>
+                  {t('contact.email')}
                 </label>
                 <input
                   type="email"
@@ -144,14 +148,14 @@ export default function Contact() {
                   value={formData.email}
                   onChange={handleChange}
                   required
-                  className="w-full px-4 py-3 glass-card-dark border border-white/20 rounded-lg focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20 text-white placeholder-gray-400"
-                  placeholder="john.doe@example.com"
+                  className={cn("w-full px-4 py-3 glass-card-dark border rounded-lg focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20", isDark ? "border-white/20 text-white placeholder-gray-400" : "border-gray-300 text-gray-900 placeholder-gray-500")}
+                  placeholder={t('contact.placeholders.email')}
                 />
               </motion.div>
 
               <motion.div variants={itemVariants}>
-                <label htmlFor="subject" className="block text-sm font-medium text-gray-300 mb-2">
-                  Subject
+                <label htmlFor="subject" className={cn("block text-sm font-medium mb-2", isDark ? "text-gray-300" : "text-gray-700")}>
+                  {t('contact.subject')}
                 </label>
                 <input
                   type="text"
@@ -160,14 +164,14 @@ export default function Contact() {
                   value={formData.subject}
                   onChange={handleChange}
                   required
-                  className="w-full px-4 py-3 glass-card-dark border border-white/20 rounded-lg focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20 text-white placeholder-gray-400"
-                  placeholder="Project Inquiry"
+                  className={cn("w-full px-4 py-3 glass-card-dark border rounded-lg focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20", isDark ? "border-white/20 text-white placeholder-gray-400" : "border-gray-300 text-gray-900 placeholder-gray-500")}
+                  placeholder={t('contact.placeholders.subject')}
                 />
               </motion.div>
 
               <motion.div variants={itemVariants}>
-                <label htmlFor="message" className="block text-sm font-medium text-gray-300 mb-2">
-                  Message
+                <label htmlFor="message" className={cn("block text-sm font-medium mb-2", isDark ? "text-gray-300" : "text-gray-700")}>
+                  {t('contact.message')}
                 </label>
                 <textarea
                   id="message"
@@ -176,8 +180,8 @@ export default function Contact() {
                   onChange={handleChange}
                   required
                   rows={5}
-                  className="w-full px-4 py-3 glass-card-dark border border-white/20 rounded-lg focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20 text-white placeholder-gray-400 resize-none"
-                  placeholder="Tell me about your project..."
+                  className={cn("w-full px-4 py-3 glass-card-dark border rounded-lg focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20 resize-none", isDark ? "border-white/20 text-white placeholder-gray-400" : "border-gray-300 text-gray-900 placeholder-gray-500")}
+                  placeholder={t('contact.placeholders.message')}
                 />
               </motion.div>
 
@@ -192,12 +196,12 @@ export default function Contact() {
                   {isSubmitting ? (
                     <>
                       <div className="animate-spin rounded-full h-5 w-5 border-2 border-white border-t-transparent" />
-                      <span>Sending...</span>
+                      <span>{t('contact.sending')}</span>
                     </>
                   ) : (
                     <>
                       <Send className="h-5 w-5" />
-                      <span>Send Message</span>
+                      <span>{t('contact.sendMessage')}</span>
                     </>
                   )}
                 </motion.button>
@@ -219,18 +223,18 @@ export default function Contact() {
                   key={info.label}
                   href={info.href}
                   whileHover={{ x: 10 }}
-                  className="flex items-center space-x-4 p-4 glass-card-dark rounded-lg hover:bg-white/10 transition-colors duration-300"
+                  className={cn("flex items-center space-x-4 p-4 glass-card-dark rounded-lg transition-colors duration-300", isDark ? "hover:bg-white/10" : "hover:bg-gray-100")}
                 >
                   <motion.div
                     whileHover={{ rotate: 360 }}
                     transition={{ duration: 0.6 }}
                     className="flex-shrink-0 w-12 h-12 rounded-full glass flex items-center justify-center"
                   >
-                    <info.icon className="h-6 w-6 text-white" />
+                    <info.icon className={cn("h-6 w-6", isDark ? "text-white" : "text-gray-900")} />
                   </motion.div>
                   <div>
-                    <div className="text-sm text-gray-400">{info.label}</div>
-                    <div className="text-white font-medium">{info.value}</div>
+                    <div className={cn("text-sm", isDark ? "text-gray-400" : "text-gray-600")}>{info.label}</div>
+                    <div className={cn("font-medium", isDark ? "text-white" : "text-gray-900")}>{info.value}</div>
                   </div>
                 </motion.a>
               ))}
@@ -243,7 +247,7 @@ export default function Contact() {
               transition={{ delay: 0.4 }}
               className="glass-card-dark p-6"
             >
-              <h3 className="text-lg font-semibold text-white mb-4">Connect With Me</h3>
+              <h3 className={cn("text-lg font-semibold mb-4", isDark ? "text-white" : "text-gray-900")}>{t('contact.connectWithMe')}</h3>
               <div className="flex space-x-4">
                 {socialLinks.map((social, index) => (
                   <motion.a
@@ -251,9 +255,9 @@ export default function Contact() {
                     href={social.href}
                     whileHover={{ scale: 1.1, rotate: 5 }}
                     whileTap={{ scale: 0.9 }}
-                    className="p-3 glass rounded-full hover:bg-white/20 transition-colors duration-300"
+                    className={cn("p-3 glass rounded-full transition-colors duration-200", isDark ? "hover:bg-white/20" : "hover:bg-gray-100")}
                   >
-                    <social.icon className="h-5 w-5 text-white" />
+                    <social.icon className={cn("h-5 w-5", isDark ? "text-white" : "text-gray-900")} />
                   </motion.a>
                 ))}
               </div>
@@ -266,14 +270,13 @@ export default function Contact() {
               transition={{ delay: 0.6 }}
               className="glass-card-dark p-6 border-l-4 border-green-500"
             >
-              <h3 className="text-lg font-semibold text-white mb-2">Current Status</h3>
-              <p className="text-gray-400">
-                I'm currently available for freelance projects and full-time opportunities. 
-                Feel free to reach out if you'd like to discuss potential collaborations.
+              <h3 className={cn("text-lg font-semibold mb-2", isDark ? "text-white" : "text-gray-900")}>{t('contact.currentStatus')}</h3>
+              <p className={cn(isDark ? "text-gray-400" : "text-gray-600")}>
+                {t('contact.statusMessage')}
               </p>
               <div className="mt-4 flex items-center space-x-2">
                 <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse" />
-                <span className="text-green-400 text-sm font-medium">Available for work</span>
+                <span className="text-green-400 text-sm font-medium">{t('contact.availableForWork')}</span>
               </div>
             </motion.div>
           </motion.div>

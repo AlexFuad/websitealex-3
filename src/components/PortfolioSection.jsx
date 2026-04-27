@@ -3,8 +3,13 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { ExternalLink, Github, Code, Calendar, Users, Star } from 'lucide-react'
+import { useTranslation } from '../hooks/useTranslation'
+import { useTheme } from '../contexts/ThemeContext'
+import { cn } from '../lib/utils'
 
 export default function PortfolioSection() {
+  const { t, language } = useTranslation()
+  const { isDark } = useTheme()
   const projects = [
     {
       id: 1,
@@ -81,6 +86,13 @@ export default function PortfolioSection() {
   ]
 
   const categories = ['All', 'Full Stack', 'Frontend', 'Backend', 'AI/ML']
+  const categoryTranslations = {
+    'All': t('portfolio.categories.all'),
+    'Full Stack': t('portfolio.categories.fullStack'),
+    'Frontend': t('portfolio.categories.frontend'),
+    'Backend': t('portfolio.categories.backend'),
+    'AI/ML': t('portfolio.categories.aiMl'),
+  }
   const [selectedCategory, setSelectedCategory] = useState('All')
 
   const filteredProjects = selectedCategory === 'All' 
@@ -153,11 +165,10 @@ export default function PortfolioSection() {
           className="text-center mb-16"
         >
           <h2 className="text-4xl md:text-5xl font-bold text-gradient mb-4">
-            Featured Projects
+            {t('portfolio.title')}
           </h2>
-          <p className="text-lg text-gray-400 max-w-2xl mx-auto">
-            Explore my collection of projects showcasing expertise in modern web development, 
-            from full-stack applications to specialized solutions.
+          <p className={cn("text-lg max-w-2xl mx-auto", isDark ? "text-gray-400" : "text-gray-600")}>
+            {t('portfolio.subtitle')}
           </p>
         </motion.div>
 
@@ -178,11 +189,11 @@ export default function PortfolioSection() {
                 px-6 py-2 rounded-full font-medium transition-all duration-300
                 ${selectedCategory === category
                   ? 'bg-gradient-to-r from-blue-500 to-purple-500 text-white shadow-lg'
-                  : 'glass-card-dark text-gray-300 hover:bg-white/20'
+                  : cn('glass-card-dark', isDark ? 'hover:bg-white/20 text-gray-300' : 'hover:bg-gray-100 text-gray-700')}
                 }
               `}
             >
-              {category}
+              {categoryTranslations[category]}
             </motion.button>
           ))}
         </motion.div>
@@ -212,7 +223,7 @@ export default function PortfolioSection() {
                   {/* Project Image */}
                   <div className="relative h-64 md:h-auto overflow-hidden">
                     <div className={`absolute inset-0 bg-gradient-to-br ${getCategoryColor(project.category)}/20 flex items-center justify-center`}>
-                      <Code className="h-16 w-16 text-white/50" />
+                      <Code className={cn("h-16 w-16", isDark ? "text-white/50" : "text-gray-900/50")} />
                     </div>
                     <motion.div
                       className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center space-x-4"
@@ -223,17 +234,17 @@ export default function PortfolioSection() {
                         href={project.github}
                         whileHover={{ scale: 1.1 }}
                         whileTap={{ scale: 0.9 }}
-                        className="p-3 glass rounded-full hover:bg-white/20 transition-colors duration-200"
+                        className={cn("p-3 glass rounded-full transition-colors duration-200", isDark ? "hover:bg-white/20" : "hover:bg-gray-100")}
                       >
-                        <Github className="h-5 w-5 text-white" />
+                        <Github className={cn("h-5 w-5", isDark ? "text-white" : "text-gray-900")} />
                       </motion.a>
                       <motion.a
                         href={project.demo}
                         whileHover={{ scale: 1.1 }}
                         whileTap={{ scale: 0.9 }}
-                        className="p-3 glass rounded-full hover:bg-white/20 transition-colors duration-200"
+                        className={cn("p-3 glass rounded-full transition-colors duration-200", isDark ? "hover:bg-white/20" : "hover:bg-gray-100")}
                       >
-                        <ExternalLink className="h-5 w-5 text-white" />
+                        <ExternalLink className={cn("h-5 w-5", isDark ? "text-white" : "text-gray-900")} />
                       </motion.a>
                     </motion.div>
                   </div>
@@ -245,17 +256,17 @@ export default function PortfolioSection() {
                         <span className={`px-3 py-1 text-xs font-medium glass rounded-full bg-gradient-to-r ${getCategoryColor(project.category)} text-white`}>
                           {project.category}
                         </span>
-                        <div className="flex items-center space-x-1 text-yellow-400">
+                        <div className={cn("flex items-center space-x-1", isDark ? "text-yellow-400" : "text-yellow-600")}>
                           <Star className="h-4 w-4 fill-current" />
                           <span className="text-sm">{project.stats.stars}</span>
                         </div>
                       </div>
                       
-                      <h3 className="text-xl font-bold text-white mb-3 group-hover:text-gradient transition-colors duration-300">
+                      <h3 className={cn("text-xl font-bold mb-3 group-hover:text-gradient transition-colors duration-300", isDark ? "text-white" : "text-gray-900")}>
                         {project.title}
                       </h3>
                       
-                      <p className="text-gray-400 text-sm mb-4 line-clamp-3">
+                      <p className={cn("text-sm mb-4 line-clamp-3", isDark ? "text-gray-400" : "text-gray-600")}>
                         {project.description}
                       </p>
                       
@@ -263,13 +274,13 @@ export default function PortfolioSection() {
                         {project.tech.slice(0, 3).map((tech) => (
                           <span
                             key={tech}
-                            className="px-2 py-1 text-xs glass rounded-full text-gray-300"
+                            className={cn("px-2 py-1 text-xs glass rounded-full", isDark ? "text-gray-300" : "text-gray-700")}
                           >
                             {tech}
                           </span>
                         ))}
                         {project.tech.length > 3 && (
-                          <span className="px-2 py-1 text-xs glass rounded-full text-gray-400">
+                          <span className={cn("px-2 py-1 text-xs glass rounded-full", isDark ? "text-gray-400" : "text-gray-600")}>
                             +{project.tech.length - 3}
                           </span>
                         )}
@@ -277,7 +288,7 @@ export default function PortfolioSection() {
                     </div>
                     
                     <div className="flex items-center justify-between">
-                      <div className="flex items-center space-x-4 text-gray-400">
+                      <div className={cn("flex items-center space-x-4", isDark ? "text-gray-400" : "text-gray-600")}>
                         <div className="flex items-center space-x-1">
                           <Users className="h-4 w-4" />
                           <span className="text-xs">{project.stats.users}</span>
@@ -291,15 +302,15 @@ export default function PortfolioSection() {
                       <div className="flex space-x-2">
                         <a
                           href={project.demo}
-                          className="text-blue-400 hover:text-blue-300 text-sm font-medium transition-colors duration-300"
+                          className={cn("text-sm font-medium transition-colors duration-300", isDark ? "text-blue-400 hover:text-blue-300" : "text-blue-600 hover:text-blue-700")}
                         >
-                          Demo
+                          {t('portfolio.liveDemo')}
                         </a>
                         <a
                           href={project.github}
-                          className="text-blue-400 hover:text-blue-300 text-sm font-medium transition-colors duration-300"
+                          className={cn("text-sm font-medium transition-colors duration-300", isDark ? "text-blue-400 hover:text-blue-300" : "text-blue-600 hover:text-blue-700")}
                         >
-                          Code
+                          {t('portfolio.sourceCode')}
                         </a>
                       </div>
                     </div>
@@ -331,7 +342,7 @@ export default function PortfolioSection() {
               {/* Project Image */}
               <div className="relative h-48 overflow-hidden">
                 <div className={`absolute inset-0 bg-gradient-to-br ${getCategoryColor(project.category)}/20 flex items-center justify-center`}>
-                  <Code className="h-12 w-12 text-white/50" />
+                  <Code className={cn("h-12 w-12", isDark ? "text-white/50" : "text-gray-900/50")} />
                 </div>
                 <motion.div
                   className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center space-x-4"
@@ -374,11 +385,11 @@ export default function PortfolioSection() {
                   </div>
                 </div>
                 
-                <h3 className="text-lg font-bold text-white mb-3 group-hover:text-gradient transition-colors duration-300">
+                <h3 className={cn("text-lg font-bold mb-3 group-hover:text-gradient transition-colors duration-300", isDark ? "text-white" : "text-gray-900")}>
                   {project.title}
                 </h3>
                 
-                <p className="text-gray-400 text-sm mb-4 line-clamp-2">
+                <p className={cn("text-sm mb-4 line-clamp-2", isDark ? "text-gray-400" : "text-gray-600")}>
                   {project.description}
                 </p>
                 
@@ -386,20 +397,20 @@ export default function PortfolioSection() {
                   {project.tech.slice(0, 3).map((tech) => (
                     <span
                       key={tech}
-                      className="px-2 py-1 text-xs glass rounded-full text-gray-300"
+                      className={cn("px-2 py-1 text-xs glass rounded-full", isDark ? "text-gray-300" : "text-gray-700")}
                     >
                       {tech}
                     </span>
                   ))}
                   {project.tech.length > 3 && (
-                    <span className="px-2 py-1 text-xs glass rounded-full text-gray-400">
+                    <span className={cn("px-2 py-1 text-xs glass rounded-full", isDark ? "text-gray-400" : "text-gray-600")}>
                       +{project.tech.length - 3}
                     </span>
                   )}
                 </div>
                 
                 <div className="flex items-center justify-between">
-                  <div className="flex items-center space-x-3 text-gray-400">
+                  <div className={cn("flex items-center space-x-3", isDark ? "text-gray-400" : "text-gray-600")}>
                     <div className="flex items-center space-x-1">
                       <Users className="h-4 w-4" />
                       <span className="text-xs">{project.stats.users}</span>
@@ -415,13 +426,13 @@ export default function PortfolioSection() {
                       href={project.demo}
                       className="text-blue-400 hover:text-blue-300 text-sm font-medium transition-colors duration-300"
                     >
-                      Demo
+                      {t('portfolio.liveDemo')}
                     </a>
                     <a
                       href={project.github}
                       className="text-blue-400 hover:text-blue-300 text-sm font-medium transition-colors duration-300"
                     >
-                      Code
+                      {t('portfolio.sourceCode')}
                     </a>
                   </div>
                 </div>
@@ -441,9 +452,9 @@ export default function PortfolioSection() {
             href="/portfolio"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            className="inline-flex items-center px-8 py-3 glass-card-dark rounded-full font-semibold hover:bg-white/20 transition-colors duration-300"
+            className={cn("inline-flex items-center px-8 py-3 glass-card-dark rounded-full font-semibold transition-colors duration-300", isDark ? "hover:bg-white/20 text-white" : "hover:bg-gray-100 text-gray-900")}
           >
-            View All Projects
+            {t('portfolio.viewProject')}
             <ExternalLink className="ml-2 h-4 w-4" />
           </motion.a>
         </motion.div>

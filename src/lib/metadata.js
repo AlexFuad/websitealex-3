@@ -1,9 +1,9 @@
 export const metadataConfig = {
   site: {
-    name: 'Portfolio - John Doe',
+    name: 'Portfolio - Alex Fuad',
     description: 'Full Stack Developer Portfolio - Creating beautiful web experiences with modern technologies',
-    url: 'https://johndoe.dev',
-    author: 'John Doe',
+    url: 'https://alexfuad.dev',
+    author: 'Alex Fuad',
     keywords: 'portfolio, web developer, full stack, react, next.js, javascript, frontend, backend',
   },
   
@@ -14,18 +14,18 @@ export const metadataConfig = {
       keywords: 'home, portfolio, welcome, full stack developer, web development',
       openGraph: {
         type: 'website',
-        title: 'John Doe - Full Stack Developer',
+        title: 'Alex Fuad - Full Stack Developer',
         description: 'Passionate developer creating beautiful web experiences with React, Next.js, and modern web technologies.',
       },
       jsonLd: {
         '@context': 'https://schema.org',
         '@type': 'WebSite',
-        name: 'John Doe Portfolio',
-        url: 'https://johndoe.dev',
+        name: 'Alex Fuad Portfolio',
+        url: 'https://alexfuad.dev',
         description: 'Full Stack Developer Portfolio',
         potentialAction: {
           '@type': 'SearchAction',
-          target: 'https://johndoe.dev/search?q={search_term_string}',
+          target: 'https://alexfuad.dev/search?q={search_term_string}',
           'query-input': 'required name=search_term_string',
         },
       },
@@ -33,24 +33,24 @@ export const metadataConfig = {
     
     about: {
       title: 'About Me',
-      description: 'Learn more about John Doe - Full Stack Developer. My skills, experience, and passion for creating amazing web applications.',
+      description: 'Learn more about Alex Fuad - Full Stack Developer. My skills, experience, and passion for creating amazing web applications.',
       keywords: 'about, skills, experience, full stack developer, background, qualifications',
       openGraph: {
         type: 'profile',
-        title: 'About John Doe - Full Stack Developer',
+        title: 'About Alex Fuad - Full Stack Developer',
         description: 'Discover my journey as a Full Stack Developer, my technical skills, and professional experience.',
       },
       jsonLd: {
         '@context': 'https://schema.org',
         '@type': 'AboutPage',
-        name: 'About John Doe',
-        description: 'Information about John Doe, Full Stack Developer',
+        name: 'About Alex Fuad',
+        description: 'Information about Alex Fuad, Full Stack Developer',
         mainEntity: {
           '@type': 'Person',
-          name: 'John Doe',
+          name: 'Alex Fuad',
           jobTitle: 'Full Stack Developer',
           description: 'Passionate developer creating beautiful web experiences',
-          url: 'https://johndoe.dev',
+          url: 'https://alexfuad.dev',
         },
       },
     },
@@ -61,14 +61,14 @@ export const metadataConfig = {
       keywords: 'projects, portfolio, web development, full stack, applications, case studies',
       openGraph: {
         type: 'website',
-        title: 'Projects - John Doe Portfolio',
+        title: 'Projects - Alex Fuad Portfolio',
         description: 'Browse my collection of web development projects and case studies.',
       },
       jsonLd: {
         '@context': 'https://schema.org',
         '@type': 'CollectionPage',
         name: 'Projects Portfolio',
-        description: 'Collection of web development projects by John Doe',
+        description: 'Collection of web development projects by Alex Fuad',
         mainEntity: {
           '@type': 'ItemList',
           numberOfItems: 6,
@@ -98,15 +98,15 @@ export const metadataConfig = {
       keywords: 'blog, articles, tutorials, web development, react, next.js, programming',
       openGraph: {
         type: 'blog',
-        title: 'Blog - John Doe',
+        title: 'Blog - Alex Fuad',
         description: 'Technical articles and tutorials about web development and programming.',
       },
       jsonLd: {
         '@context': 'https://schema.org',
         '@type': 'Blog',
-        name: 'John Doe Blog',
+        name: 'Alex Fuad Blog',
         description: 'Technical blog about web development and programming',
-        url: 'https://johndoe.dev/blog',
+        url: 'https://alexfuad.dev/blog',
         blogPost: [
           {
             '@type': 'BlogPosting',
@@ -115,7 +115,7 @@ export const metadataConfig = {
             datePublished: '2024-01-15',
             author: {
               '@type': 'Person',
-              name: 'John Doe',
+              name: 'Alex Fuad',
             },
           },
         ],
@@ -124,22 +124,22 @@ export const metadataConfig = {
     
     contact: {
       title: 'Contact',
-      description: 'Get in touch with John Doe. Contact information for project inquiries, collaborations, and opportunities.',
+      description: 'Get in touch with Alex Fuad. Contact information for project inquiries, collaborations, and opportunities.',
       keywords: 'contact, email, phone, address, hire, collaborate, project inquiry',
       openGraph: {
         type: 'website',
-        title: 'Contact John Doe',
+        title: 'Contact Alex Fuad',
         description: 'Contact information for project inquiries and collaborations.',
       },
       jsonLd: {
         '@context': 'https://schema.org',
         '@type': 'ContactPage',
-        name: 'Contact John Doe',
-        description: 'Contact information and form for getting in touch with John Doe',
+        name: 'Contact Alex Fuad',
+        description: 'Contact information and form for getting in touch with Alex Fuad',
         mainEntity: {
           '@type': 'Person',
-          name: 'John Doe',
-          email: 'john.doe@example.com',
+          name: 'Alex Fuad',
+          email: 'alex.fuad@example.com',
           telephone: '+1 (555) 123-4567',
           address: {
             '@type': 'PostalAddress',
@@ -153,11 +153,11 @@ export const metadataConfig = {
     
     portfolio: {
       title: 'Portfolio',
-      description: 'Complete portfolio showcase of John Doe - Full Stack Developer. Projects, skills, and professional experience.',
+      description: 'Complete portfolio showcase of Alex Fuad - Full Stack Developer. Projects, skills, and professional experience.',
       keywords: 'portfolio, showcase, full stack developer, web development, projects gallery',
       openGraph: {
         type: 'website',
-        title: 'Portfolio - John Doe',
+        title: 'Portfolio - Alex Fuad',
         description: 'Complete portfolio showcase of web development projects and professional experience.',
       },
       jsonLd: {
@@ -167,7 +167,7 @@ export const metadataConfig = {
         description: 'Complete portfolio of web development projects',
         mainEntity: {
           '@type': 'Person',
-          name: 'John Doe',
+          name: 'Alex Fuad',
           jobTitle: 'Full Stack Developer',
           knowsAbout: [
             'Web Development',
@@ -196,7 +196,7 @@ export const metadataConfig = {
         article: {
           publishedTime: '2024-01-15T00:00:00Z',
           modifiedTime: '2024-01-20T00:00:00Z',
-          author: 'John Doe',
+          author: 'Alex Fuad',
           section: 'Tutorial',
           tag: ['Next.js', 'React', 'Web Development'],
         },
@@ -210,23 +210,23 @@ export const metadataConfig = {
         dateModified: '2024-01-20T00:00:00Z',
         author: {
           '@type': 'Person',
-          name: 'John Doe',
-          url: 'https://johndoe.dev',
+          name: 'Alex Fuad',
+          url: 'https://alexfuad.dev',
         },
         publisher: {
           '@type': 'Organization',
-          name: 'John Doe Portfolio',
+          name: 'Alex Fuad Portfolio',
           logo: {
             '@type': 'ImageObject',
-            url: 'https://johndoe.dev/logo.png',
+            url: 'https://alexfuad.dev/logo.png',
           },
         },
         mainEntityOfPage: {
           '@type': 'WebPage',
-          '@id': 'https://johndoe.dev/blog/getting-started-nextjs',
+          '@id': 'https://alexfuad.dev/blog/getting-started-nextjs',
         },
         image: [
-          'https://johndoe.dev/blog/nextjs-14-cover.jpg',
+          'https://alexfuad.dev/blog/nextjs-14-cover.jpg',
         ],
       },
     },
@@ -261,8 +261,8 @@ export function getPageMetadata(pageKey, customMetadata = {}) {
     },
     twitter: {
       card: 'summary_large_image',
-      site: '@johndoe',
-      creator: '@johndoe',
+      site: '@alexfuad',
+      creator: '@alexfuad',
       title: pageConfig.title,
       description: pageConfig.description,
       images: [`${metadataConfig.site.url}/og-image.jpg`],
@@ -291,8 +291,8 @@ export function getArticleMetadata(articleKey, customMetadata = {}) {
     },
     twitter: {
       card: 'summary_large_image',
-      site: '@johndoe',
-      creator: '@johndoe',
+      site: '@alexfuad',
+      creator: '@alexfuad',
       title: articleConfig.title,
       description: articleConfig.description,
     },

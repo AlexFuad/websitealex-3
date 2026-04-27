@@ -2,8 +2,11 @@
 
 import { motion } from 'framer-motion'
 import { ArrowDown, Download, Github, Linkedin } from 'lucide-react'
+import { useTheme } from '../contexts/ThemeContext'
+import { cn } from '../lib/utils'
 
 export default function Hero() {
+  const { isDark } = useTheme()
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -63,7 +66,7 @@ export default function Hero() {
         >
           {/* Greeting */}
           <motion.div variants={itemVariants}>
-            <p className="text-lg md:text-xl text-gray-400 font-medium">
+            <p className={cn("text-lg md:text-xl font-medium", isDark ? "text-gray-400" : "text-gray-600")}>
               Hello, I'm
             </p>
           </motion.div>
@@ -73,15 +76,15 @@ export default function Hero() {
             variants={itemVariants}
             className="text-5xl md:text-7xl lg:text-8xl font-bold text-gradient"
           >
-            John Doe
+            Alex Fuad
           </motion.h1>
 
           {/* Title */}
           <motion.div variants={itemVariants} className="space-y-4">
-            <h2 className="text-2xl md:text-3xl lg:text-4xl text-white font-semibold">
+            <h2 className={cn("text-2xl md:text-3xl lg:text-4xl font-semibold", isDark ? "text-white" : "text-gray-900")}>
               Full Stack Developer
             </h2>
-            <p className="text-lg md:text-xl text-gray-400 max-w-2xl mx-auto leading-relaxed">
+            <p className={cn("text-lg md:text-xl max-w-2xl mx-auto leading-relaxed", isDark ? "text-gray-400" : "text-gray-600")}>
               Crafting beautiful, responsive, and performant web experiences with modern technologies. 
               Passionate about creating elegant solutions to complex problems.
             </p>
@@ -105,7 +108,7 @@ export default function Hero() {
               href="#projects"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="px-8 py-3 glass-card-dark text-white rounded-full font-semibold hover:bg-white/20 transition-colors duration-300"
+              className={cn("px-8 py-3 glass-card-dark rounded-full font-semibold transition-colors duration-300", isDark ? "text-white hover:bg-white/20" : "text-gray-900 hover:bg-gray-100")}
             >
               View Projects
             </motion.a>
@@ -115,7 +118,7 @@ export default function Hero() {
               download
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="px-8 py-3 glass-card-dark text-white rounded-full font-semibold hover:bg-white/20 transition-colors duration-300 flex items-center gap-2"
+              className={cn("px-8 py-3 glass-card-dark rounded-full font-semibold transition-colors duration-300 flex items-center gap-2", isDark ? "text-white hover:bg-white/20" : "text-gray-900 hover:bg-gray-100")}
             >
               <Download className="h-4 w-4" />
               Resume
@@ -131,17 +134,17 @@ export default function Hero() {
               href="#"
               whileHover={{ scale: 1.2, rotate: 5 }}
               whileTap={{ scale: 0.9 }}
-              className="p-3 glass-card-dark rounded-full hover:bg-white/20 transition-colors duration-300"
+              className={cn("p-3 glass-card-dark rounded-full transition-colors duration-300", isDark ? "hover:bg-white/20" : "hover:bg-gray-100")}
             >
-              <Github className="h-5 w-5 text-white" />
+              <Github className={cn("h-5 w-5", isDark ? "text-white" : "text-gray-900")} />
             </motion.a>
             <motion.a
               href="#"
               whileHover={{ scale: 1.2, rotate: 5 }}
               whileTap={{ scale: 0.9 }}
-              className="p-3 glass-card-dark rounded-full hover:bg-white/20 transition-colors duration-300"
+              className={cn("p-3 glass-card-dark rounded-full transition-colors duration-300", isDark ? "hover:bg-white/20" : "hover:bg-gray-100")}
             >
-              <Linkedin className="h-5 w-5 text-white" />
+              <Linkedin className={cn("h-5 w-5", isDark ? "text-white" : "text-gray-900")} />
             </motion.a>
           </motion.div>
         </motion.div>
@@ -158,7 +161,7 @@ export default function Hero() {
             ease: 'easeInOut',
           }}
         >
-          <a href="#about" className="text-gray-400 hover:text-white transition-colors duration-300">
+          <a href="#about" className={cn("transition-colors duration-300", isDark ? "text-gray-400 hover:text-white" : "text-gray-600 hover:text-gray-900")}>
             <ArrowDown className="h-6 w-6" />
           </a>
         </motion.div>

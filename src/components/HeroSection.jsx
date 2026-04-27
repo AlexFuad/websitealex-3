@@ -2,8 +2,13 @@
 
 import { motion } from 'framer-motion'
 import { ArrowDown, Download, Github, Linkedin, Mail, Sparkles } from 'lucide-react'
+import { useTranslation } from '../hooks/useTranslation'
+import { useTheme } from '../contexts/ThemeContext'
+import { cn } from '../lib/utils'
 
 export default function HeroSection() {
+  const { t } = useTranslation()
+  const { isDark } = useTheme()
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -52,7 +57,7 @@ export default function HeroSection() {
     },
   }
 
-  const animatedTitle = "Full Stack Developer"
+  const animatedTitle = t('hero.subtitle')
   
   return (
     <section id="home" className="min-h-screen flex items-center justify-center relative overflow-hidden">
@@ -95,10 +100,10 @@ export default function HeroSection() {
               animate={{ rotate: 360 }}
               transition={{ duration: 2, repeat: Infinity, ease: 'linear' }}
             >
-              <Sparkles className="h-5 w-5 text-yellow-400" />
+              <Sparkles className={cn("h-5 w-5", isDark ? "text-yellow-400" : "text-yellow-600")} />
             </motion.div>
-            <p className="text-lg md:text-xl text-gray-400 font-medium">
-              Hello, I'm
+            <p className={cn("text-lg md:text-xl font-medium", isDark ? "text-gray-400" : "text-gray-600")}>
+              {t('hero.greeting')}
             </p>
           </motion.div>
 
@@ -107,7 +112,7 @@ export default function HeroSection() {
             variants={textVariants}
             className="text-5xl md:text-7xl lg:text-8xl font-bold text-gradient"
           >
-            {'John Doe'.split('').map((letter, index) => (
+            {t('hero.title').split('').map((letter, index) => (
               <motion.span
                 key={index}
                 variants={letterVariants}
@@ -120,7 +125,7 @@ export default function HeroSection() {
 
           {/* Animated Title */}
           <motion.div variants={itemVariants} className="relative">
-            <div className="text-2xl md:text-3xl lg:text-4xl text-white font-semibold">
+            <div className={cn("text-2xl md:text-3xl lg:text-4xl font-semibold", isDark ? "text-white" : "text-gray-900")}>
               {animatedTitle.split('').map((letter, index) => (
                 <motion.span
                   key={index}
@@ -144,10 +149,9 @@ export default function HeroSection() {
           {/* Description */}
           <motion.p
             variants={itemVariants}
-            className="text-lg md:text-xl text-gray-400 max-w-2xl mx-auto leading-relaxed"
+            className={cn("text-lg md:text-xl max-w-2xl mx-auto leading-relaxed", isDark ? "text-gray-400" : "text-gray-600")}
           >
-            Crafting beautiful, responsive, and performant web experiences with modern technologies. 
-            Passionate about creating elegant solutions to complex problems.
+            {t('hero.description')}
           </motion.p>
 
           {/* CTA Buttons */}
@@ -162,17 +166,17 @@ export default function HeroSection() {
               className="px-8 py-3 bg-gradient-to-r from-blue-500 to-purple-500 text-white rounded-full font-semibold shadow-lg transition-all duration-300 flex items-center space-x-2"
             >
               <Mail className="h-4 w-4" />
-              <span>Get In Touch</span>
+              <span>{t('hero.getInTouch')}</span>
             </motion.a>
             
             <motion.a
               href="#portfolio"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="px-8 py-3 glass-card-dark text-white rounded-full font-semibold hover:bg-white/20 transition-all duration-300 flex items-center space-x-2"
+              className={cn("px-8 py-3 glass-card-dark rounded-full font-semibold transition-all duration-300 flex items-center space-x-2", isDark ? "text-white hover:bg-white/20" : "text-gray-900 hover:bg-gray-100")}
             >
               <Download className="h-4 w-4" />
-              <span>View Projects</span>
+              <span>{t('hero.viewProjects')}</span>
             </motion.a>
 
             <motion.a
@@ -180,10 +184,10 @@ export default function HeroSection() {
               download
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="px-8 py-3 glass-card-dark text-white rounded-full font-semibold hover:bg-white/20 transition-all duration-300 flex items-center space-x-2"
+              className={cn("px-8 py-3 glass-card-dark rounded-full font-semibold transition-all duration-300 flex items-center space-x-2", isDark ? "text-white hover:bg-white/20" : "text-gray-900 hover:bg-gray-100")}
             >
               <Download className="h-4 w-4" />
-              <span>Resume</span>
+              <span>{t('hero.resume')}</span>
             </motion.a>
           </motion.div>
 
@@ -193,8 +197,8 @@ export default function HeroSection() {
             className="flex justify-center space-x-6"
           >
             {[
-              { icon: Github, href: '#', label: 'GitHub' },
-              { icon: Linkedin, href: '#', label: 'LinkedIn' },
+              { icon: Github, href: '#', label: t('hero.social.github') },
+              { icon: Linkedin, href: '#', label: t('hero.social.linkedin') },
             ].map((social, index) => (
               <motion.a
                 key={social.label}
@@ -205,10 +209,10 @@ export default function HeroSection() {
                   boxShadow: '0 5px 15px rgba(255, 255, 255, 0.3)'
                 }}
                 whileTap={{ scale: 0.9 }}
-                className="p-3 glass-card-dark rounded-full hover:bg-white/20 transition-all duration-300"
+                className={cn("p-3 glass-card-dark rounded-full transition-all duration-300", isDark ? "hover:bg-white/20" : "hover:bg-gray-100")}
                 aria-label={social.label}
               >
-                <social.icon className="h-5 w-5 text-white" />
+                <social.icon className={cn("h-5 w-5", isDark ? "text-white" : "text-gray-900")} />
               </motion.a>
             ))}
           </motion.div>
@@ -226,7 +230,7 @@ export default function HeroSection() {
             ease: 'easeInOut',
           }}
         >
-          <a href="#skills" className="text-gray-400 hover:text-white transition-colors duration-300">
+          <a href="#skills" className={cn("transition-colors duration-300", isDark ? "text-gray-400 hover:text-white" : "text-gray-600 hover:text-gray-900")}>
             <ArrowDown className="h-6 w-6" />
           </a>
         </motion.div>

@@ -1,28 +1,33 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { Github, Linkedin, Mail, Twitter, Heart } from 'lucide-react'
+import { Github, Linkedin, Twitter, Mail, Heart } from 'lucide-react'
+import { useTranslation } from '../hooks/useTranslation'
+import { useTheme } from '../contexts/ThemeContext'
+import { cn } from '../lib/utils'
 
 export default function Footer() {
+  const { t } = useTranslation()
+  const { isDark } = useTheme()
   const socialLinks = [
-    { icon: Github, href: '#', label: 'GitHub' },
-    { icon: Linkedin, href: '#', label: 'LinkedIn' },
-    { icon: Twitter, href: '#', label: 'Twitter' },
-    { icon: Mail, href: '#', label: 'Email' },
+    { icon: Github, href: '#', label: t('footer.social.github') },
+    { icon: Linkedin, href: '#', label: t('footer.social.linkedin') },
+    { icon: Twitter, href: '#', label: t('footer.social.twitter') },
+    { icon: Mail, href: '#', label: t('footer.social.email') },
   ]
 
   const footerSections = [
     {
-      title: 'Navigation',
-      links: ['Home', 'About', 'Projects', 'Skills', 'Contact'],
+      title: t('footer.quickLinks'),
+      links: [t('navbar.home'), t('navbar.about'), t('navbar.portfolio'), t('navbar.skills'), t('navbar.contact')],
     },
     {
-      title: 'Services',
-      links: ['Web Development', 'UI/UX Design', 'Mobile Apps', 'Consulting'],
+      title: t('footer.resources'),
+      links: [t('footer.blog'), t('footer.resume'), t('footer.testimonials')],
     },
     {
-      title: 'Resources',
-      links: ['Blog', 'Portfolio', 'Resume', 'Testimonials'],
+      title: t('footer.socialLinks'),
+      links: ['GitHub', 'LinkedIn', 'Twitter', 'Email'],
     },
   ]
 
@@ -39,9 +44,9 @@ export default function Footer() {
             transition={{ duration: 0.5 }}
             className="space-y-4"
           >
-            <h3 className="text-2xl font-bold text-gradient">Portfolio</h3>
-            <p className="text-gray-400 text-sm leading-relaxed">
-              Creating beautiful and functional web experiences with modern technologies.
+            <h3 className="text-2xl font-bold text-gradient">{t('footer.brand')}</h3>
+            <p className={cn("text-sm leading-relaxed", isDark ? "text-gray-400" : "text-gray-600")}>
+              {t('footer.description')}
             </p>
             <div className="flex space-x-4">
               {socialLinks.map((social, index) => (
@@ -52,10 +57,10 @@ export default function Footer() {
                   whileInView={{ opacity: 1, scale: 1 }}
                   transition={{ delay: index * 0.1 }}
                   whileHover={{ scale: 1.1, y: -2 }}
-                  className="p-2 rounded-lg glass-card-dark hover:bg-white/20 transition-colors duration-200"
+                  className={cn("p-2 rounded-lg glass-card-dark transition-colors duration-200", isDark ? "hover:bg-white/20" : "hover:bg-gray-100")}
                   aria-label={social.label}
                 >
-                  <social.icon className="h-4 w-4 text-gray-300" />
+                  <social.icon className={cn("h-4 w-4", isDark ? "text-gray-300" : "text-gray-700")} />
                 </motion.a>
               ))}
             </div>
@@ -70,7 +75,7 @@ export default function Footer() {
               transition={{ delay: sectionIndex * 0.1 }}
               className="space-y-4"
             >
-              <h4 className="text-lg font-semibold text-white">{section.title}</h4>
+              <h4 className={cn("text-lg font-semibold", isDark ? "text-white" : "text-gray-900")}>{section.title}</h4>
               <ul className="space-y-2">
                 {section.links.map((link, linkIndex) => (
                   <motion.li
@@ -81,7 +86,7 @@ export default function Footer() {
                   >
                     <a
                       href={`#${link.toLowerCase()}`}
-                      className="text-gray-400 hover:text-white text-sm transition-colors duration-200"
+                      className={cn("text-sm transition-colors duration-200", isDark ? "text-gray-400 hover:text-white" : "text-gray-600 hover:text-gray-900")}
                     >
                       {link}
                     </a>
@@ -99,17 +104,17 @@ export default function Footer() {
           transition={{ delay: 0.5 }}
           className="mt-12 pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0"
         >
-          <div className="flex items-center space-x-2 text-gray-400 text-sm">
-            <span>© 2024 Portfolio. All rights reserved.</span>
+          <div className={cn("flex items-center space-x-2 text-sm", isDark ? "text-gray-400" : "text-gray-600")}>
+            <span>© 2024 {t('footer.brand')}. {t('footer.rights')}</span>
           </div>
           
           <motion.div
-            className="flex items-center space-x-2 text-gray-400 text-sm"
+            className={cn("flex items-center space-x-2 text-sm", isDark ? "text-gray-400" : "text-gray-600")}
             whileHover={{ scale: 1.05 }}
           >
-            <span>Made with</span>
+            <span>{t('footer.madeWith')}</span>
             <Heart className="h-4 w-4 text-red-500 animate-pulse" />
-            <span>using Next.js & Tailwind CSS</span>
+            <span>{t('footer.using')}</span>
           </motion.div>
         </motion.div>
       </div>
